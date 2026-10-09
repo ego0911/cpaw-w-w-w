@@ -107,7 +107,8 @@
     "plugin_store": "Plugin Store",
     "config_management": "Config Panel",
     "logs": "Logs Viewer",
-    "system_info": "Management Center Info"
+    "system_info": "Management Center Info",
+    "usage_statistics": "Usage Statistics"
   },
   "nav_groups": {
     "operate": "Operate",

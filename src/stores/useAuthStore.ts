@@ -213,6 +213,8 @@ export const useAuthStore = create<AuthStoreState>()(
     }),
     {
       name: STORAGE_KEY_AUTH,
+      // 版本号与旧构建(异构混淆格式)隔离:不匹配的持久化状态直接弃用,防止垃圾凭据自动重连打爆管理接口 401 计数
+      version: 2,
       storage: createJSONStorage(() => ({
         getItem: (name) => {
           const data = obfuscatedStorage.getItem<AuthStoreState>(name);

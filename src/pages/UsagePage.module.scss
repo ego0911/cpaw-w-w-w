@@ -1,0 +1,46 @@
+.shell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: calc(100vh - 64px);
+
+  .frame {
+    width: 100%;
+    height: 100%;
+    min-height: calc(100vh - 64px);
+    border: none;
+    display: block;
+
+    &[data-ready='false'] {
+      visibility: hidden;
+    }
+  }
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: var(--text-secondary, #888);
+
+    .hint a {
+      color: var(--accent, #4a9eff);
+    }
+
+    .retry {
+      padding: 6px 18px;
+      border-radius: 8px;
+      border: 1px solid var(--border, #444);
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+
+      &:hover {
+        background: rgba(128, 128, 128, 0.12);
+      }
+    }
+  }
+}

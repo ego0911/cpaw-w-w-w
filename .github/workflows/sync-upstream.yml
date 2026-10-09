@@ -1,0 +1,47 @@
+name: Sync Upstream from Official CPAMC
+
+on:
+  schedule:
+    # 每天北京时间 11:00 (UTC 03:00) 自动检测官方上游更新
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-upstream:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Add upstream remote
+        run: |
+          git remote add upstream https://github.com/router-for-me/Cli-Proxy-API-Management-Center.git
+          git fetch upstream main
+
+      - name: Check for upstream changes
+        id: check_diff
+        run: |
+          # 检查上游是否有未合并的新提交
+          BEHIND_COUNT=$(git rev-list --count HEAD..upstream/main)
+          echo "Upstream has $BEHIND_COUNT commits ahead."
+          echo "behind_count=$BEHIND_COUNT" >> $GITHUB_OUTPUT
+
+      - name: Merge upstream and push
+        if: steps.check_diff.outputs.behind_count > 0
+        run: |
+          echo "Merging upstream/main into current branch..."
+          git merge upstream/main -m "chore(sync): 自动合并上游官方最新代码 ($BEHIND_COUNT commits)"
+          git push origin main
+          echo "Successfully merged and pushed upstream changes to main."

@@ -107,7 +107,8 @@
     "plugin_store": "Магазин плагинов",
     "config_management": "Панель конфигурации",
     "logs": "Просмотр логов",
-    "system_info": "Информация системы"
+    "system_info": "Информация системы",
+    "usage_statistics": "Статистика использования"
   },
   "nav_groups": {
     "operate": "Работа",
